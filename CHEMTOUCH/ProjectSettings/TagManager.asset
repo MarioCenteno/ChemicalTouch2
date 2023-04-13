@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Grabable
+  - World
+  - Atom
+  - Mollecule
+  - Spawnable
+  - Bullet
+  - Connection
+  - Anchor
+  - AtomChecked
+  - Gun
+  - ConnectionPoint
+  - Eraser
+  - AtomManager
+  - Ink
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Teleportable
+  - Grabable
+  - Connection
+  - Simple
+  - Double
+  - Triple
+  - Molecule
+  - Eraser
+  - Ink
+  - InfoTablets
+  - hands
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
