@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Container : MonoBehaviour
 {
     public AtomicManager manager;
     public ContainerLock myLock;
     public GameObject Lid;
+
     [SerializeField]
     public List<IContainable> containedObjects = new List<IContainable>();
     public List<AtomV2> containedAtoms = new List<AtomV2>();

@@ -34,6 +34,9 @@ public class ContainerLock : MonoBehaviour
             {
                 if (keyInserted)
                 {
+                    
+                    OnInsert.Invoke();
+
                     bool locked = false;
                     foreach (Pin pin in pins)
                     {
