@@ -23,22 +23,13 @@ public class AtomicCreation : MonoBehaviour
     public void CreateAtom()
     {
 
-
-        /*
-        Vector3 botom = gameObject.transform.position - new Vector3(0, transform.localScale.y * posMod, 0);
-        Vector3 top = gameObject.transform.position + new Vector3(0, transform.localScale.y * posMod, 0);
-        Collider[] hitColliders = Physics.OverlapCapsule(botom, top, transform.localScale.x * 0.5f * radiusMod, m_LayerMask);*/
-        //Check when there is a new collider coming into contact with the box
-
         // 1 - Verificação de Ecrã pressionado - Não é necessário - ele recolhe automáticamente o tipo da molecula a partir da ligação ao quadro no unity
-
-
         //Verificar se é mais fácil clonar os atomos establecido em vez de criar completamente novos.
 
         // 2 - Criação da Molecula - Verificar se isto cria um objeto tridimensional ou é necessário que isto seja um game object
         atom = (GameObject)menu.atom;
 
-        Vector3 pos = new Vector3((float)-0.844, (float)2, (float)0.821);
+        Vector3 pos = new Vector3((float)-0.485, (float)1.3, (float)0.821);
 
         Instantiate(atom, pos, Quaternion.identity);
 

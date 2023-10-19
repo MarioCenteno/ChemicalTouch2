@@ -60,7 +60,7 @@ public class ConnectionV2 : MonoBehaviour
     [SerializeField] 
     public GameObject connectionMeshObj;
     [SerializeField] 
-    public int size = 0;
+    public int size = 0;//Conta quantas ligações estão a ser feitas (Verificar se isto necessita de ser alterado para acomodar quando a ligação envolve mais que um atomo.)
     [SerializeField] 
     public bool isPending;
     [SerializeField] 
@@ -90,12 +90,30 @@ public class ConnectionV2 : MonoBehaviour
     }
 
     public void freeElectrons()
+    {//libertar eletrões do atomo
+        foreach (ElectronV2 electron in atom1Electrons)
+        {
+            electron.connected = false;
+            electron.gameObject.SetActive(true);
+        }
+        foreach (ElectronV2 electron in atom2Electrons)
+        {
+            electron.connected = false;
+            electron.gameObject.SetActive(true);
+        }
+    }
+
+    public void freeElectrons1()
     {
         foreach (ElectronV2 electron in atom1Electrons)
         {
             electron.connected = false;
             electron.gameObject.SetActive(true);
         }
+    }
+
+    public void freeElectrons2()
+    {
         foreach (ElectronV2 electron in atom2Electrons)
         {
             electron.connected = false;
@@ -205,7 +223,7 @@ public class ConnectionV2 : MonoBehaviour
 
     }
 
-    public void instantiateRenderers()
+    public void instantiateRenderers()//Renderização das linhas que marcam ligações pendentes
     {
         GameObject temp = new GameObject("r");
         temp.transform.SetParent(gameObject.transform);
@@ -323,7 +341,7 @@ public class ConnectionV2 : MonoBehaviour
         {
             directionAtom1 += electron.transform.position - A1.transform.position;
         }
-        directionAtom1 = A1.gameObject.transform.position + directionAtom1;
+        directionAtom1 = A1.gameObject.transform.position + directionAtom1;//A posição do atomo é definida de acordo com as posições dos eletrões
         //directionAtom1 /= atom1Electrons.Count;
         directionAtom2 = new Vector3(0, 0, 0);
         foreach (ElectronV2 electron in atom2Electrons)
@@ -347,16 +365,17 @@ public class ConnectionV2 : MonoBehaviour
             A2.connections.Add(this);
             //A2.removePendingConnection();
             //A1.removePendingConnection();
-            isPending = false;
+            isPending = false;//A conexão deixa de ser pendente
             A1.currentConections += size;
             A2.currentConections += size;
+
 
 
             /**/
             Vector3 stayPos;
             Vector3 movePos;
             updateConnectionDirections();
-            if (atomToStay == A1)
+            if (atomToStay == A1)//Atribuição da posição ao atomo a permanecer imóvel
             {
                 stayPos = directionAtom1;
             }
@@ -401,7 +420,7 @@ public class ConnectionV2 : MonoBehaviour
                 atomToMove.molecule.transform.position += offset;
                 updateConnectionDirections();
                 /**/
-                if (atomToMove == A1)
+                if (atomToMove == A1)//Atribuição da posição ao atomo a mover-se (Verificar aqui)
                 {
                     movePos = directionAtom1;
                 }
@@ -477,7 +496,22 @@ public class ConnectionV2 : MonoBehaviour
         //Debug.Log(" // ", A2);
         if(molecule.BreakConnection(this, A1, A2))
         {
+            //AudioSource arc=A1.arc;
+            //AudioClip a= A1.a2;
+            //arc.clip = a;
+            //arc.Play();
             freeElectrons();
+
+            if (!A1.isGrabed)
+            {
+                A1.LetGo();
+            }
+
+            if (!A2.isGrabed)
+            {
+                A2.LetGo();
+            }
+
             //Debug.Log("removing: ", this.gameObject);
             //Debug.Log(" from: ", molecule.gameObject);
             A1.currentConections -= size;

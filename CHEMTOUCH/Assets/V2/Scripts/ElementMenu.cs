@@ -17,14 +17,12 @@ public class ElementMenu : MonoBehaviour
 
     public GameObject atom;
 
-
     public GameObject activeElement;
 
     void Start()
     {
-        activeElement = elements[0];
-        activeElement.SetActive(true);
-        atom = (GameObject)activeElement.GetComponent<ElementBox>().atom;
+        //activeElement = elements[0];
+        //atom = (GameObject)activeElement.GetComponent<ElementBox>().atom;
 
 
     }
@@ -32,10 +30,7 @@ public class ElementMenu : MonoBehaviour
     // Update is called once per frame
     public void ChangeElement(int element)
     {
-
-            activeElement.SetActive(false);
             activeElement = elements[element];
-            activeElement.SetActive(true);
             atom = (GameObject)activeElement.GetComponent<ElementBox>().atom;
 
 

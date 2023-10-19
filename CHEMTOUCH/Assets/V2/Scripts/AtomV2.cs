@@ -14,7 +14,7 @@ public enum AtomType
     Sulfur,
     Iodine,
     Bromine,
-    Empty,
+    Empty
 }
 public class AtomV2 : MonoBehaviour, IContainable
 {
@@ -60,6 +60,10 @@ public class AtomV2 : MonoBehaviour, IContainable
     public MeshRenderer MyMesh;
     [SerializeField] 
     public bool isContained = false;
+
+
+    //public AudioSource arc;
+    //public AudioClip a1,a2;
     public bool IsContained { get => isContained; set => isContained = value; }
 
     private void Awake()
@@ -72,9 +76,9 @@ public class AtomV2 : MonoBehaviour, IContainable
     private void Start()
     {
         Interactable = gameObject.GetComponent<XRGrabInteractable>();
-        manager = GameObject.FindGameObjectWithTag("AtomManager").GetComponent<AtomicManager>();
+        manager = GameObject.FindGameObjectWithTag("AtomManager").GetComponent<AtomicManager>();//Recolhe o atomic manager da aplicação
         MyMesh.material = manager.atomProprieties[((int)type)].material;
-        foreach (ElectronV2 electron in electrons)
+        foreach (ElectronV2 electron in electrons)//Os eletrões são omitidos de principio
         {
             electron.gameObject.SetActive(false);
         }
@@ -100,7 +104,7 @@ public class AtomV2 : MonoBehaviour, IContainable
                     if (currentConections >= manager.atomProprieties[(int)type].connectionLimit) break;
 
                     if (!electrons[i].connected)
-                        electrons[i].gameObject.SetActive(true);
+                        electrons[i].gameObject.SetActive(true);//Ativação dos eletrões de forma a ficarem visíveis
                 }
             }
             
@@ -116,13 +120,13 @@ public class AtomV2 : MonoBehaviour, IContainable
             gameObject.transform.parent = parentTransform;
             needTransfromUpdate = false;
         }
-        foreach (ElectronV2 electron in electrons)
+        foreach (ElectronV2 electron in electrons)//eletrões conectados são descartados
         {
             if (electron.connected)
                 electron.gameObject.SetActive(false);
         }
 
-        if (isConnecting)
+        if (isConnecting)//Só entra aqui se estiver a tentar ligar-se a outra molécula
         {
             if (isMainConector)
             {
@@ -229,37 +233,41 @@ public class AtomV2 : MonoBehaviour, IContainable
     {
         isGrabed = false;
         if(!minimized){
-            if (isConnecting)
+            if (isConnecting)//É uma conexão pendente - ................................
             {
                 pendingConnection.CompleteConnection(this, connectingAtom);
+                //arc.clip = a1;
+                //arc.Play();
                 /**/
-                if (molecule != null)
+                if (molecule != null)//O atomo está ligado a uma molécula
                 {
-                    if (connectingAtom.molecule != null)
+                    if (connectingAtom.molecule != null)//O atomo 2 já está ligado a uma molécula
                     {
                         MoleculeV2 oldMolecule = molecule;
-                        connectingAtom.molecule.mergeInto(oldMolecule);
+                        connectingAtom.molecule.mergeInto(oldMolecule);//Processo de junção das moléculas
                         Destroy(oldMolecule.gameObject);
                     }
                     else
                     {
-                        molecule.addAtom(connectingAtom);
+                        molecule.addAtom(connectingAtom);//O atomo 2 é adicionado à composição da molécula correspondente ao atomo 1
                     }
                 }
-                else
+                else//O atomo não está ligado a nenhuma molécula
                 {
-                    if (connectingAtom.molecule != null)
+                    if (connectingAtom.molecule != null)//O atomo 2 já está ligado a uma molécula
                     {
                         connectingAtom.molecule.addAtom(this);
                     }
-                    else
+                    else//Os atomos não estão conectados a nenhuma molécula
                     {
-                        MoleculeV2 newMolecule = Instantiate(manager.moleculePrefab, gameObject.transform.position, Quaternion.identity).GetComponent<MoleculeV2>();
-                        newMolecule.InitMolecule();
+                        MoleculeV2 newMolecule = Instantiate(manager.moleculePrefab, gameObject.transform.position, Quaternion.identity).GetComponent<MoleculeV2>();//MoleculePrefab é um objeto vazio
+                        newMolecule.InitMolecule();//Criação e inicialização de uma nova molécula
+
                         //newMolecule.transform.position = connectingAtom.gameObject.transform.position;
                         //newMolecule.transform.rotation = connectingAtom.gameObject.transform.rotation;
-                        newMolecule.addAtom(connectingAtom, true);
-                        newMolecule.addAtom(this);
+
+                        newMolecule.addAtom(connectingAtom, true);//Adição dos atomos à molécula sendo o atomo 2 a raiz
+                        newMolecule.addAtom(this);// e faz com que molecule=newMolecule
                         newMolecule.interactable.attachTransform = connectingAtom.gameObject.transform;
 
 
@@ -272,7 +280,7 @@ public class AtomV2 : MonoBehaviour, IContainable
                 interactable.interactionLayerMask = LayerMask.GetMask("Nothing");
                 gameObject.GetComponent<XRGrabInteractable>().interactionLayerMask = LayerMask.GetMask("Nothing");
                 /**/
-                molecule.addConnection(pendingConnection);
+                molecule.addConnection(pendingConnection);//A conexão pendente é adicionada à molécula
                 molecule.needsUpdate = true;
 
 
@@ -282,7 +290,7 @@ public class AtomV2 : MonoBehaviour, IContainable
                 mol_interactable.interactionManager.RegisterInteractable(mol_interactable);
                 manager.OnCreateConnection.Invoke(pendingConnection);
 
-                connectingAtom.removePendingConnection();
+                connectingAtom.removePendingConnection();//A conexão pendente é removida de ambos os atomos
                 removePendingConnection();
                 try
                 {
@@ -305,7 +313,7 @@ public class AtomV2 : MonoBehaviour, IContainable
                 //Debug.Log("here after select enter");
                 /**/
 
-            }
+            }// - ...................................................
             foreach (ElectronV2 electron in electrons)
             {
                 //if (electron.connected)

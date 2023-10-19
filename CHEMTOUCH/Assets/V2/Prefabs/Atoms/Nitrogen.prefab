@@ -333,13 +333,14 @@ MonoBehaviour:
   isGrabed: 0
   isMainConector: 0
   weight: 0
-  type: 2
+  type: 3
   parentTransform: {fileID: 0}
   needTransfromUpdate: 0
   lineMat: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   electrons:
   - {fileID: 3132438268325149200}
   - {fileID: 3132438267852440008}
+  - {fileID: 2049886943334328528}
   myCollider: {fileID: 3132438268752360087}
   minimized: 0
   MyMesh: {fileID: 0}

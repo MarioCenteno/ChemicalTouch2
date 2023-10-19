@@ -44,7 +44,7 @@ public class DoorOpener : MonoBehaviour
                     openFinished = true;
                 }
             }
-            
+
         }
 
     }

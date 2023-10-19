@@ -9,6 +9,7 @@ public class ContainerLock : MonoBehaviour
     public AtomicManager manager = null;
     public UnityEvent OnUnlock = null;
     public UnityEvent OnInsert = null;
+    public UnityEvent OnRemoval = null;
     public Container myContainer;
     public bool isLocked = true;
     public MoleculeV2 key = null;
@@ -34,7 +35,7 @@ public class ContainerLock : MonoBehaviour
             {
                 if (keyInserted)
                 {
-                    
+
                     OnInsert.Invoke();
 
                     bool locked = false;
@@ -49,7 +50,7 @@ public class ContainerLock : MonoBehaviour
                                 break;
                             }
                         }
-                        
+
 
                         Debug.Log(pin.pinType);
 
@@ -63,7 +64,11 @@ public class ContainerLock : MonoBehaviour
                         OnUnlock.Invoke();
                     }
                 }
-
+            }
+            else{
+                if (isLocked){
+                    OnRemoval.Invoke();
+                }
             }
         }
        

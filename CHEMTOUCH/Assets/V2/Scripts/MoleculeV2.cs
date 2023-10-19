@@ -32,7 +32,7 @@ public class MoleculeV2 : MonoBehaviour, IContainable
     [SerializeField] 
     public bool isGrabed = false;
     [SerializeField] 
-    public bool isConnecting = false;
+    public bool isConnecting = false;//Dar revisão a esta variável uma vez nunca chega a sair do false
     [SerializeField] 
     public bool minimized = false;
     [SerializeField]
@@ -274,14 +274,14 @@ public class MoleculeV2 : MonoBehaviour, IContainable
     }
     public void addAtom(AtomV2 atom, bool isFirst = false)
     {
-        atom.molecule = this;
+        atom.molecule = this;//Ligação do atomo à molécula
         atoms.Add(atom);
         atom.parentTransform = atomParent;
         atom.needTransfromUpdate = true;
 
-        gameObject.GetComponent<XRGrabInteractable>().colliders.Add(atom.myCollider);
+        gameObject.GetComponent<XRGrabInteractable>().colliders.Add(atom.myCollider);//Adiciona as colisões do novo atomo
         needsUpdate = true;
-        if (isFirst)
+        if (isFirst)//Caso este seja o primeiro atomo a ser adicionado ele é considerado a raiz da molécula
         {
             root = atom;
             interactable.attachTransform = root.gameObject.transform;
@@ -471,7 +471,8 @@ public class MoleculeV2 : MonoBehaviour, IContainable
         {
             RemoveConnection(connection);
         }
-        foreach(AtomV2 atom in atomsInSub.Except(new List<AtomV2>()))
+        foreach(AtomV2 atom in atomsInSub)
+        //foreach (AtomV2 atom in atomsInSub.Except(new List<AtomV2>())) !!!!!!
         {
             RemoveAtom(atom);
         }

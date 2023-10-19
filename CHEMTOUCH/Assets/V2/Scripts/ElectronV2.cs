@@ -12,21 +12,21 @@ public class ElectronV2 : MonoBehaviour
         {
             if (!connected)
             {
-                if (other.CompareTag("ConnectionPoint"))
+                if (other.CompareTag("ConnectionPoint"))//Verifica se está a colidir com outro eletrão
                 {
                     ElectronV2 otherElectron;
                     if (other.gameObject.TryGetComponent<ElectronV2>(out otherElectron))
                     {
                         AtomV2 otherAtom = otherElectron.atom;
-                        if (otherAtom.isGrabed)
+                        if (otherAtom.isGrabed)//Verifica se o atomo oposto está agarrado (Isto pode corresponder a um atomo não agarrado)
                         {
-                            if (!atom.isConnecting && !otherAtom.isConnecting)
+                            if (!atom.isConnecting && !otherAtom.isConnecting)//Caso nenhum dos atomos esteja conectado
                             {
                                 if (atom.molecule != null)
                                 {
-                                    if(otherAtom.molecule != null)
+                                    if(otherAtom.molecule != null)//Ambos os atomos fazem parte de moléculas diferentes
                                     {
-                                        if (!atom.molecule.isConnecting && !otherAtom.molecule.isConnecting)
+                                        if (!atom.molecule.isConnecting && !otherAtom.molecule.isConnecting)//As moléculas não estão a tentar ligar-se a outros elementos
                                         {
                                             StartConnection(atom, otherAtom, otherElectron);
                                             return;
@@ -47,14 +47,23 @@ public class ElectronV2 : MonoBehaviour
                                 
                             }
 
-                            else if (atom.isConnecting && otherAtom.isConnecting)
+                            else if (atom.isConnecting && otherAtom.isConnecting)//Caso os atomos já estejam ligados a algo (Alterar aqui)
                             {
                                 if (atom.isMainConector)
                                 {
                                     UpdateConnection(otherElectron);
                                     return;
                                 }
+                                /*else //- Código a implementar para as moléculas ciclicas
+                                {
+                                    StartConnection(atom, otherAtom, otherElectron); //- Verificar o processo de ligação e porquê que falha aqui
+                                    return;
+                                }*/
                             }
+                           /* else{ //- Código a implementar para um atomo se ligar a múltiplas partes de uma molécula
+                                    StartConnection(atom, otherAtom, otherElectron); //- Verificar o processo de ligação e porquê que falha aqui (e adicionar ligações de um atomo a múltiplos pontos de uma molécula)
+                                    return;
+                            }*/
                         }
                     }
 
@@ -78,7 +87,7 @@ public class ElectronV2 : MonoBehaviour
         otherElectron.connected = true;
     }
 
-    public void UpdateConnection( ElectronV2 otherElectron)
+    public void UpdateConnection( ElectronV2 otherElectron)//Atualiza a conexão caso a ligação envolva mais do que um par de atomos.
     {
         ConnectionV2 pendingConnection = atom.pendingConnection;
         if (pendingConnection.size < 3)
@@ -87,7 +96,7 @@ public class ElectronV2 : MonoBehaviour
             connected = true;
             otherElectron.connected = true;
             otherElectron.gameObject.SetActive(false);
-            otherElectron.gameObject.SetActive(false);
+            otherElectron.gameObject.SetActive(false);// Possivel remoção no futuro
         }
     }
 }

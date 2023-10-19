@@ -1225,7 +1225,6 @@ MonoBehaviour:
   manager: {fileID: 0}
   myLock: {fileID: 5803055445466250784}
   Lid: {fileID: 284932461236774556}
-  light: {fileID: 3950846323810766823}
   containedAtoms: []
   containedMolecules: []
   containables: []
@@ -2188,7 +2187,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 2100067466101028486}
-  lit: {fileID: 2100000, guid: a9e3a1d58d4cd6c43ae1d71ba9520f25, type: 2}
+  lit: {fileID: 2100000, guid: 74a20a8277343724ca381949f1796b1b, type: 2}
+  litW: {fileID: 2100000, guid: 348ef60b95553344186a9584f1b49935, type: 2}
   unLit: {fileID: 2100000, guid: cbe7cd834ecf8d1448d66e167084b3de, type: 2}
   isLit: 0
 --- !u!1 &5803055445466250785
